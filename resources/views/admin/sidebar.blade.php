@@ -4,7 +4,7 @@
     <!-- Brand Logo -->
     <a href="/admin" class="brand-link">
       <img src="{{asset('assets')}}/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Direktori UMKM</span>
+      <span class="brand-text font-weight-light">Direktori Pegawai</span>
     </a>
 
     <!-- Sidebar -->
@@ -54,7 +54,7 @@
                
                 @endif
               @endauth
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                  <a href="{{ url('admin/kabkota') }}" class="nav-link">
                    <i class="far fa-circle nav-icon"></i>
                    <p>Kabupaten Kota</p>
@@ -82,6 +82,30 @@
                 <a href="{{ url('admin/umkm') }}" class="nav-link">
                    <i class="far fa-circle nav-icon"></i>
                    <p>UMKM</p>
+                </a>
+              </li> --}}
+              <li class="nav-item">
+                <a href="{{ url('admin/divisi') }}" class="nav-link">
+                   <i class="far fa-circle nav-icon"></i>
+                   <p>Divisi</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('admin/pegawai') }}" class="nav-link">
+                   <i class="far fa-circle nav-icon"></i>
+                   <p>Pegawai</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('admin/pengajuancuti') }}" class="nav-link">
+                   <i class="far fa-circle nav-icon"></i>
+                   <p>Pengajuan Cuti</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('admin/jatahcuti') }}" class="nav-link">
+                   <i class="far fa-circle nav-icon"></i>
+                   <p>Jatah Cuti</p>
                 </a>
               </li>
             </ul>

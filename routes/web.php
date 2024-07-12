@@ -2,17 +2,21 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\KategoriUmkmController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\KabkotaController;
-use App\Http\Controllers\PembinaController;
-use App\Http\Controllers\ProvinsiController;
-use App\Http\Controllers\UmkmController;
+use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\JatahCutiController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PengajuanCutiController;
 
-
+use App\Models\Divisi;
 
 Route::get('/', function () {
     return view('index');
+});
+
+Route::get('/profile', function () {
+    return view('profile');
 });
 
 Route::get('/dashboard', function () {
@@ -25,62 +29,47 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     route::get('/admin', [AdminController::class, 'index']);
-    route::get('/admin/kabkota', [KabkotaController::class, 'index']);
-    route::get('/admin/kategoriumkm', [KategoriUmkmController::class, 'index']);
-    route::get('/admin/Pembina', [PembinaController::class, 'index']);
-    route::get('/admin/provinsi', [ProvinsiController::class, 'index']);
-    route::get('/admin/umkm', [UmkmController::class, 'index']);
 
+    // Form Landing Page
+    route::get('', [FormController::class, 'create']);
+    route::post('store', [FormController::class, 'store']);
 
-    // Kabkota
-    route::get('/admin/kabkota', [KabkotaController::class, 'index']);
-    route::get('/admin/kabkota/create', [KabkotaController::class, 'create'])->middleware('admin');
-    route::post('/admin/kabkota/store', [KabkotaController::class, 'store']);
-    route::get('/admin/kabkota/show/{id}', [KabkotaController::class, 'show']);
-    route::get('/admin/kabkota/edit/{id}', [KabkotaController::class, 'edit'])->middleware('admin');
-    route::put('/admin/kabkota/update/{id}', [KabkotaController::class, 'update']);
-    route::delete('/admin/kabkota/destroy/{id}', [KabkotaController::class, 'destroy']);
-    
-    
-    
-    // Route::middleware('admin')->group(function () {
+    // Divisi
+    route::get('/admin/divisi', [DivisiController::class, 'index']);
+    route::get('/admin/divisi/create', [DivisiController::class, 'create'])->middleware('admin');
+    route::post('/admin/divisi/store', [DivisiController::class, 'store']);
+    route::get('/admin/divisi/show/{id}', [DivisiController::class, 'show']);
+    route::get('/admin/divisi/edit/{id}', [DivisiController::class, 'edit'])->middleware('admin');
+    route::put('/admin/divisi/update/{id}', [DivisiController::class, 'update']);
+    route::delete('/admin/divisi/destroy/{id}', [DivisiController::class, 'destroy']);
 
-    // Kategori Umkm
-    route::get('/admin/kategoriumkm', [KategoriUmkmController::class, 'index']);
-    route::get('/admin/kategoriumkm/create', [KategoriUmkmController::class, 'create'])->middleware('admin');
-    route::post('/admin/kategoriumkm/store', [KategoriUmkmController::class, 'store']);
-    route::get('/admin/kategoriumkm/show/{id}', [KategoriUmkmController::class, 'show']);
-    route::get('/admin/kategoriumkm/edit/{id}', [KategoriUmkmController::class, 'edit'])->middleware('admin');
-    route::Put('/admin/kategoriumkm/update/{id}', [KategoriUmkmController::class, 'update']);
-    route::delete('/admin/kategoriumkm/destroy/{id}', [KategoriUmkmController::class, 'destroy']);
+    // Pegawai
+    route::get('/admin/pegawai', [PegawaiController::class, 'index']);
+    route::get('/admin/pegawai/create', [PegawaiController::class, 'create'])->middleware('admin');
+    route::post('/admin/pegawai/store', [PegawaiController::class, 'store']);
+    route::get('/admin/pegawai/show/{id}', [PegawaiController::class, 'show']);
+    route::get('/admin/pegawai/edit/{id}', [PegawaiController::class, 'edit']);
+    route::put('/admin/pegawai/update/{id}', [PegawaiController::class, 'update']);
+    route::delete('/admin/pegawai/destroy/{id}', [PegawaiController::class, 'destroy']);
 
-    // Pembina
-    route::get('/admin/pembina', [PembinaController::class, 'index']);
-    route::get('/admin/pembina/create', [PembinaController::class, 'create'])->middleware('admin');
-    route::post('/admin/pembina/store', [PembinaController::class, 'store']);
-    route::get('/admin/pembina/show/{id}', [PembinaController::class, 'show']);
-    route::get('/admin/pembina/edit/{id}', [PembinaController::class, 'edit'])->middleware('admin');
-    route::Put('/admin/pembina/update/{id}', [PembinaController::class, 'update']);
-    route::delete('/admin/pembina/destroy/{id}', [PembinaController::class, 'destroy']);
+    // Pengajuan Cuti
+    route::get('/admin/pengajuancuti', [PengajuanCutiController::class, 'index']);
+    route::get('/admin/pengajuancuti/create', [PengajuanCutiController::class, 'create']);
+    route::post('/admin/pengajuancuti/store', [PengajuanCutiController::class, 'store']);
+    route::get('/admin/pengajuancuti/show/{id}', [PengajuanCutiController::class, 'show']);
+    route::get('/admin/pengajuancuti/edit/{id}', [PengajuanCutiController::class, 'edit'])->middleware('admin');
+    route::put('/admin/pengajuancuti/update/{id}', [PengajuanCutiController::class, 'update']);
+    route::delete('/admin/pengajuancuti/destroy/{id}', [PengajuanCutiController::class, 'destroy']);
 
-    // Provinsi
-    route::get('/admin/provinsi', [ProvinsiController::class, 'index']);
-    route::get('/admin/provinsi/create', [ProvinsiController::class, 'create'])->middleware('admin');
-    route::post('/admin/provinsi/store', [ProvinsiController::class, 'store']);
-    route::get('/admin/provinsi/show/{id}', [ProvinsiController::class, 'show']);
-    route::get('/admin/provinsi/edit/{id}', [ProvinsiController::class, 'edit'])->middleware('admin');
-    route::Put('/admin/provinsi/update/{id}', [ProvinsiController::class, 'update']);
-    route::delete('/admin/provinsi/destroy/{id}', [ProvinsiController::class, 'destroy']);
-
-    // Umkm
-    route::get('/admin/umkm', [UmkmController::class, 'index']);
-    route::get('/admin/umkm/create', [UmkmController::class, 'create']);
-    route::post('/admin/umkm/store', [UmkmController::class, 'store']);
-    route::get('/admin/umkm/show/{id}', [UmkmController::class, 'show']);
-    route::get('/admin/umkm/edit/{id}', [UmkmController::class, 'edit']);
-    route::Put('/admin/umkm/update/{id}', [UmkmController::class, 'update']);
-    route::delete('/admin/umkm/destroy/{id}', [UmkmController::class, 'destroy']);
-    });
+    // Jatah Cuti
+    route::get('/admin/jatahcuti', [JatahCutiController::class, 'index']);
+    route::get('/admin/jatahcuti/create', [JatahCutiController::class, 'create'])->middleware('admin');
+    route::post('/admin/jatahcuti/store', [JatahCutiController::class, 'store']);
+    route::get('/admin/jatahcuti/show/{id}', [JatahCutiController::class, 'show']);
+    route::get('/admin/jatahcuti/edit/{id}', [JatahCutiController::class, 'edit'])->middleware('admin');
+    route::put('/admin/jatahcuti/update/{id}', [JatahCutiController::class, 'update']);
+    route::delete('/admin/jatahcuti/destroy/{id}', [JatahCutiController::class, 'destroy']);
+});
 // });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
